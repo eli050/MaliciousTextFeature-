@@ -23,5 +23,5 @@ class PipelineManager:
             if tweet.get(target_column):
                 self.pub.publish_message("raw_tweets_antisemitic",tweet)
             else:
-                self.pub.publish_message("raw_not_tweets_antisemitic",tweet)
+                self.pub.publish_message("raw_tweets_not_antisemitic",tweet)
         return len(tweets)
