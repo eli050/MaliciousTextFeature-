@@ -19,7 +19,7 @@ class PipelineManager:
     def run_pipeline(self,target_column):
         tweets = self.dal.get_100_tweets()
         for tweet in tweets:
-            tweet["CreateDate"] = str(tweet["CreateDate"])
+            # tweet["CreateDate"] = str(tweet["CreateDate"])
             if tweet.get(target_column):
                 self.pub.publish_message("raw_tweets_antisemitic",tweet)
             else:

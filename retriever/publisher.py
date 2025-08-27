@@ -8,7 +8,7 @@ class Producer:
                  encode = 'utf-8'):
         self.producer = KafkaProducer(bootstrap_servers=[bootstrap_servers],
                              value_serializer=lambda x:
-                             json.dumps(x).encode(encode))
+                             json.dumps(x, default=str).encode(encode))
 
     def publish_message(self,topic,message):
         """Publish a message to a Kafka topic."""
