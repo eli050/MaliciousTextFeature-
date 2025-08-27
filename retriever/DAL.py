@@ -28,14 +28,3 @@ class DataAccessLayer:
         except Exception as e:
             raise DALError(f"Error retrieving tweets: {e}")
 
-# print(time.strftime("%Y-%m-%dT%H:%M:%SZ", datetime.now().timetuple()))
-
-
-# uri = "mongodb+srv://IRGC_NEW:iran135@cluster0.6ycjkak.mongodb.net/"
-# dal = DataAccessLayer(db_client=MongoClient(uri), db_name="IranMalDB", collection_name="tweets")
-# print(dal.db_client)
-# bal = dal.get_100_tweets()
-# print(len(bal))
-# print(dal.db_client)
-# print(len(bal))
-# # pprint(bal)
