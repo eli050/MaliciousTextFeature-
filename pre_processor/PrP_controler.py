@@ -8,7 +8,7 @@ NOT_ANTISEMITIC = "raw_tweets_not_antisemitic"
 ANTISEMITIC_CLEANED = "preprocessed_tweets_antisemitic"
 NOT_ANTISEMITIC_CLEANED = "preprocessed_tweets_not_antisemitic"
 
-class PrP_controler:
+class PrPController:
     def __init__(self):
         self.text_cleaner = TextCleaner()
         self.consumer = Consumer([ANTISEMITIC,NOT_ANTISEMITIC]).get_consumer()
