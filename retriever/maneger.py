@@ -12,11 +12,13 @@ MONGO_URI = os.getenv("MONGO_URI", f"mongodb+srv://{MONGO_USER}:{MONGO_PASS}@clu
 
 
 class PipelineManager:
+    """Manages the data pipeline from MongoDB to Kafka topics."""
     def __init__(self):
         self.dal = DataAccessLayer(db_client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="tweets")
         self.pub = Producer()
 
     def run_pipeline(self,target_column):
+        """Fetch tweets from MongoDB and publish them to Kafka topics based on the target column."""
         tweets = self.dal.get_100_tweets()
         for tweet in tweets:
             if tweet.get(target_column):

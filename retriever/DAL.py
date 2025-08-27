@@ -6,13 +6,16 @@ class DALError(Exception):
     pass
 
 class DataAccessLayer:
+    """Data Access Layer for MongoDB operations."""
     def __init__(self, db_client:MongoClient, db_name: str, collection_name: str):
+        """Initialize the DAL with a MongoDB client, database name, and collection name."""
         self.db_client = db_client
         self.db = self.db_client[db_name]
         self.collection = self.db[collection_name]
         self.last_timestamp = None
 
     def get_100_tweets(self) -> list:
+        """Retrieve up to 100 tweets from the collection, sorted by CreateDate."""
         try:
             if self.last_timestamp is None:
                 data = list(self.collection.find({},{"_id":0}).sort("CreateDate", 1).limit(100))
