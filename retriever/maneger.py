@@ -1,7 +1,7 @@
 import os
 from pymongo import MongoClient
 from DAL import DataAccessLayer
-from publisher import Producer
+from kafka_objects.producer import Producer
 
 MONGO_PASS = os.getenv("MONGO_PASSWORD", "iran135")
 MONGO_USER = os.getenv("MONGO_USER", "IRGC_NEW")
