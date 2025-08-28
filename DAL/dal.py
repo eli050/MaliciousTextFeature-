@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 
 from DAL.models import TweetInDB
+from connection.connection_to_db import Connection
 
 
 class DALError(Exception):
@@ -8,10 +9,9 @@ class DALError(Exception):
     pass
 
 class TweetDAL:
-    def __init__(self, client:MongoClient,collection_name:str, db_name='tweets_db'):
-        self.client = client
-        self.db = self.client[db_name]
-        self.collection = self.db[collection_name]
+    def __init__(self, connection: Connection):
+        """Initialize with a MongoDB connection."""
+        self.db_conn = connection.get_connection()
 
     @staticmethod
     def _to_tweet_out(tweets:dict) -> TweetInDB:
@@ -24,12 +24,13 @@ class TweetDAL:
 
     def get_tweets(self, limit=100):
         try:
-            return [self._to_tweet_out(tweet) for tweet in self.collection.find({},{"_id":0}).limit(limit)]
+            return [self._to_tweet_out(tweet) for tweet in self.db_conn.find({},{"_id":0}).limit(limit)]
         except Exception as e:
             raise DALError(f"Error retrieving tweets: {e}")
+
     def insert_tweet(self, tweet:dict):
         try:
-            self.collection.insert_one(tweet)
+            self.db_conn.insert_one(tweet)
         except Exception as e:
             raise DALError(f"Error inserting tweet: {e}")
 
