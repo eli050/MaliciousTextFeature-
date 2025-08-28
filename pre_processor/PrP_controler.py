@@ -10,15 +10,17 @@ NOT_ANTISEMITIC_CLEANED = "preprocessed_tweets_not_antisemitic"
 
 class PrPController:
     def __init__(self):
-        self.text_cleaner = TextCleaner()
         self.consumer = Consumer([ANTISEMITIC,NOT_ANTISEMITIC]).get_consumer()
         self.producer = Producer()
     def process(self):
         try:
             for message in self.consumer:
-                cleaned_text = self.text_cleaner.clean_central(message.value['text'])
+                print(message.value)
+                cleaned_text = TextCleaner.clean_central(message.value['text'])
                 topic = message.topic
+                print(cleaned_text)
                 message.value['cleaned_text'] = cleaned_text
+                print(message.value)
                 if topic == ANTISEMITIC:
                     self.producer.publish_message(ANTISEMITIC_CLEANED,message.value)
                 else:
