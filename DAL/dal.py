@@ -11,7 +11,8 @@ class DALError(Exception):
 class TweetDAL:
     def __init__(self, connection: Connection):
         """Initialize with a MongoDB connection."""
-        self.db_conn = connection.get_connection()
+        self.conn = connection
+        self.db_conn = self.conn.connection
 
     @staticmethod
     def _to_tweet_out(tweets:dict) -> TweetInDB:

@@ -14,12 +14,5 @@ class Connection:
     def connection(self):
         return self._collection
 
-    @connection.setter
-    def connection(self, value):
-        self._collection = self._db[value]
-
-
-    def close_connection(self):
-        self._collection.close()
 
 

@@ -11,7 +11,8 @@ class DataAccessLayer:
     """Data Access Layer for MongoDB operations."""
     def __init__(self, connection:Connection):
         """Initialize with a MongoDB connection."""
-        self.db_conn = connection.connection()
+        self.conn = connection
+        self.db_conn = self.conn.connection
         self._last_timestamp = None
 
     def get_100_tweets(self) -> list:
@@ -26,7 +27,6 @@ class DataAccessLayer:
                             .sort("CreateDate", 1).limit(100))
                 if data:
                     self._last_timestamp = data[-1]["CreateDate"]
-            self.db_conn.close()
             return data
         except Exception as e:
             raise DALError(f"Error retrieving tweets: {e}")

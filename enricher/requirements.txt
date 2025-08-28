@@ -1,6 +1,3 @@
 nltk
-nltk.sentiment.vader
-re
 datefinder
-os
 kafka-python
