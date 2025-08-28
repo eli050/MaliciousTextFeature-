@@ -9,10 +9,10 @@ class DALError(Exception):
 
 class DataAccessLayer:
     """Data Access Layer for MongoDB operations."""
-    def __init__(self, connection:Connection):
+    def __init__(self,connection:Connection,collection_name:str = "tweets"):
         """Initialize with a MongoDB connection."""
         self.conn = connection
-        self.db_conn = self.conn.connection
+        self.db_conn = self.conn.connection[collection_name]
         self._last_timestamp = None
 
     def get_100_tweets(self) -> list:

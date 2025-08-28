@@ -12,11 +12,8 @@ MONGO_DB = os.getenv("MONGO_DB", "tweets_db")
 MONGO_URI = os.getenv("MONGO_URI", f"mongodb://{MONGO_HOST}:{MONGO_PORT}")
 
 
-conn_antisemitic = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="antisemitic_tweets")
-dal_antisemitic = TweetDAL(connection=conn_antisemitic)
-conn_not_antisemitic = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="not_antisemitic_tweets")
-dal_not_antisemitic = TweetDAL(connection=conn_not_antisemitic)
-
+conn = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB)
+dal= TweetDAL(connection=conn)
 app = FastAPI()
 
 @app.get('/')
@@ -26,11 +23,11 @@ def index():
 
 @app.get('/not_antisemitic_tweets')
 def get_not_antisemitic_tweets():
-    return dal_not_antisemitic.get_tweets()
+    return dal.get_tweets("not_antisemitic_tweets")
 
 @app.get('/antisemitic_tweets')
 def get_not_antisemitic_tweets():
-    return dal_antisemitic.get_tweets()
+    return dal.get_tweets("antisemitic_tweets")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8001)
