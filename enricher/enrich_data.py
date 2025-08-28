@@ -57,7 +57,7 @@ class Enricher:
             # use regex to check if the weapon is in the text
             if re.search(r'\b' + re.escape(weapon) + r'\b', text):
                 weapons_found.append(weapon)
-        return ", ".join(weapons_found)
+        return weapons_found
 
     def _find_latest_date(self, text):
         """find the latest date in the text"""

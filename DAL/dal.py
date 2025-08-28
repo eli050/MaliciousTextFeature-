@@ -23,8 +23,10 @@ class TweetDAL:
             raise DALError(f"Error converting to TweetInDB: {e}")
 
 
-    def get_tweets(self, limit=100):
+    def get_tweets(self, limit=None):
         try:
+            if limit is None:
+                return [self._to_tweet_out(tweet) for tweet in self.db_conn.find({},{"_id":0})]
             return [self._to_tweet_out(tweet) for tweet in self.db_conn.find({},{"_id":0}).limit(limit)]
         except Exception as e:
             raise DALError(f"Error retrieving tweets: {e}")
