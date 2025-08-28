@@ -1,6 +1,7 @@
 import os
 from pymongo import MongoClient
 from DAL import DataAccessLayer
+from connection.connection_to_db import Connection
 from kafka_objects.producer import Producer
 
 MONGO_PASS = os.getenv("MONGO_PASSWORD", "iran135")
@@ -14,7 +15,8 @@ MONGO_URI = os.getenv("MONGO_URI", f"mongodb+srv://{MONGO_USER}:{MONGO_PASS}@clu
 class PipelineManager:
     """Manages the data pipeline from MongoDB to Kafka topics."""
     def __init__(self):
-        self.dal = DataAccessLayer(db_client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="tweets")
+        conn = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="tweets")
+        self.dal = DataAccessLayer(connection=conn)
         self.pub = Producer()
 
     def run_pipeline(self,target_column):
