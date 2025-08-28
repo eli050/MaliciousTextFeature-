@@ -15,8 +15,8 @@ MONGO_URI = os.getenv("MONGO_URI", f"mongodb+srv://{MONGO_USER}:{MONGO_PASS}@clu
 class PipelineManager:
     """Manages the data pipeline from MongoDB to Kafka topics."""
     def __init__(self):
-        conn = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB, collection_name="tweets")
-        self.dal = DataAccessLayer(connection=conn)
+        conn = Connection(client=MongoClient(MONGO_URI), db_name=MONGO_DB)
+        self.dal = DataAccessLayer(connection=conn,collection_name="tweets")
         self.pub = Producer()
 
     def run_pipeline(self,target_column):
