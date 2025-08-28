@@ -23,17 +23,19 @@ class TweetDAL:
             raise DALError(f"Error converting to TweetInDB: {e}")
 
 
-    def get_tweets(self, limit=None):
+    def get_tweets(self,collection_name, limit=None):
         try:
+            collection_conn = self.db_conn[collection_name]
             if limit is None:
-                return [self._to_tweet_out(tweet) for tweet in self.db_conn.find({},{"_id":0})]
-            return [self._to_tweet_out(tweet) for tweet in self.db_conn.find({},{"_id":0}).limit(limit)]
+                return [self._to_tweet_out(tweet) for tweet in collection_conn.find({},{"_id":0})]
+            return [self._to_tweet_out(tweet) for tweet in collection_conn.find({},{"_id":0}).limit(limit)]
         except Exception as e:
             raise DALError(f"Error retrieving tweets: {e}")
 
-    def insert_tweet(self, tweet:dict):
+    def insert_tweet(self,collection_name, tweet:dict):
         try:
-            self.db_conn.insert_one(tweet)
+            collection_conn = self.db_conn[collection_name]
+            collection_conn.insert_one(tweet)
         except Exception as e:
             raise DALError(f"Error inserting tweet: {e}")
 
