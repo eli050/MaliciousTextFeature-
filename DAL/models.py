@@ -8,6 +8,6 @@ class TweetInDB(BaseModel):
     CreateDate: str
     cleaned_text: str
     sentiment : str
-    weapons_detected: list
-    relevant_timestamp: str
+    weapons_detected: list|None
+    relevant_timestamp: str|None
 
