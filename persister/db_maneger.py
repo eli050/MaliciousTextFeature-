@@ -1,6 +1,4 @@
 import os
-
-
 from pymongo import MongoClient
 from DAL.dal import TweetDAL
 from connection.connection_to_db import Connection
