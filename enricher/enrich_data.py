@@ -50,7 +50,7 @@ class Enricher:
     def _find_weapons(self, text):
         """find the first weapon in the text."""
         if not isinstance(text, str):
-            return ""
+            return []
         weapons_found = []
 
         for weapon in self.weapons_list:
